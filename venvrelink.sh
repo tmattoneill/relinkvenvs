@@ -21,6 +21,23 @@ fi
 
 myenv=$1
 
+# read in any optional command line arguments
+while getopts v:a:c: option
+do
+	case "${option}"
+	in
+		v) VIRTENV=${OPTARG};;
+		a) RELINKALL=true;;
+		c) CHANGETO=true;;
+	esac
+done
+
+if [ $RELINKALL && $ CHANGETO ]
+then
+	echo "Options [a] and [c] can not be set together. Ignoring change to."
+	$CHANGETO = false
+fi
+
 echo "Relinking python bin for: $myenv."
 
 find ~/.virtualenvs/$myenv/ -type l
