@@ -12,7 +12,10 @@
 #  - does the virtual environment exist?
 #  - conflicting user options
 
-if [ $# = 0 ]
+# pull in arguments from custom arg processing script
+source arg_handler; arg_handler "$@"
+
+if [ $# = 0 ] ;
 then
 	echo "Usage: venvrelink.sh [options] environment name [additional environments]"
 	echo "Exiting..."
@@ -32,7 +35,8 @@ do
 	esac
 done
 
-if [ $RELINKALL && $ CHANGETO ]
+# throw a message and reset change to value if in conflict
+if [ $RELINKALL && $CHANGETO ] ;
 then
 	echo "Options [a] and [c] can not be set together. Ignoring change to."
 	$CHANGETO = false
@@ -46,7 +50,7 @@ relink="y"
 echo "Relink the following files [Y] / N: "
 read -r relink
 
-if [ $relink = "Y" ] || [ $relink = "y" ]
+if [ $relink = "Y" ] || [ $relink = "y" ] ;
 then
 	find ~/.virtualenvs/$myenv/ -type l -delete
 	virtualenv ~/.virtualenvs/$myenv
